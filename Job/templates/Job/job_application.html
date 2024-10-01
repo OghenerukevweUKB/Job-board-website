@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage application for {{job.title}}</title>
+</head>
+<body>
+    <h2>Application for {{job.title}}</h2>
+    <p>Total Applicants: {{application_count}}</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Application</th>
+                <th>Resume</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for application in applications %}
+            <tr>
+                <td>{{application.user.username}}</td>
+                <td><a href="{{application.resume.urls}}" download> Download Resume</a></td>
+                <td>{{application.get_status_display}}</td>
+                <td>
+                    <form method="POST" action="{% url 'update_application_status' application.id %}">
+                        {% csrf_token %}
+                        <select name="status" id="">
+                            <option value="pending" {% if application.status == 'pending' %} select {% endif %}> Pending</option>
+                            <option value="accepted" {% if application.status == 'accepted' %} select {% endif %}> Accepted</option>
+                            <option value="declined" {% if application.status == 'declined' %} select {% endif %}> Decline</option>
+                        </select>
+
+                        <BUtton type="submit">Update</BUtton>
+
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+</body>
+</html>

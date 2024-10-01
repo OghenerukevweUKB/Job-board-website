@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job_listing</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <p>
+        <a href="{% url 'login' %}">login</a>
+        <a href="{% url 'register' %}">register</a>
+    </p>
+    
+    <h2>Available Jobs</h2>
+
+    <ul>
+        {% for job in jobs %}
+        <li>
+            <h3>{{job.Title}}</h3>
+            <p>{{job.Description}}</p>
+            <a href="{% url 'apply_for_job' job.id %}">Apply Now`</a>
+            
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
